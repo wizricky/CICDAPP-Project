@@ -1,0 +1,15 @@
+C:\Users\rkimov\Desktop\flexforge\FlexForge.Repository\bin\Debug\net8.0\FlexForge.Repository.deps.json
+C:\Users\rkimov\Desktop\flexforge\FlexForge.Repository\bin\Debug\net8.0\FlexForge.Repository.dll
+C:\Users\rkimov\Desktop\flexforge\FlexForge.Repository\bin\Debug\net8.0\FlexForge.Repository.pdb
+C:\Users\rkimov\Desktop\flexforge\FlexForge.Repository\obj\Debug\net8.0\FlexForge.Repository.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\rkimov\Desktop\flexforge\FlexForge.Repository\obj\Debug\net8.0\FlexForge.Repository.AssemblyInfoInputs.cache
+C:\Users\rkimov\Desktop\flexforge\FlexForge.Repository\obj\Debug\net8.0\FlexForge.Repository.AssemblyInfo.cs
+C:\Users\rkimov\Desktop\flexforge\FlexForge.Repository\obj\Debug\net8.0\FlexForge.Repository.csproj.CoreCompileInputs.cache
+C:\Users\rkimov\Desktop\flexforge\FlexForge.Repository\obj\Debug\net8.0\FlexForge.Repository.dll
+C:\Users\rkimov\Desktop\flexforge\FlexForge.Repository\obj\Debug\net8.0\refint\FlexForge.Repository.dll
+C:\Users\rkimov\Desktop\flexforge\FlexForge.Repository\obj\Debug\net8.0\FlexForge.Repository.pdb
+C:\Users\rkimov\Desktop\flexforge\FlexForge.Repository\obj\Debug\net8.0\ref\FlexForge.Repository.dll
+C:\Users\rkimov\Desktop\flexforge\FlexForge.Repository\bin\Debug\net8.0\FlexForge.Domain.dll
+C:\Users\rkimov\Desktop\flexforge\FlexForge.Repository\bin\Debug\net8.0\FlexForge.Domain.pdb
+C:\Users\rkimov\Desktop\flexforge\FlexForge.Repository\obj\Debug\net8.0\FlexForge.Repository.csproj.AssemblyReference.cache
+C:\Users\rkimov\Desktop\flexforge\FlexForge.Repository\obj\Debug\net8.0\FlexForg.9BF58FA1.Up2Date

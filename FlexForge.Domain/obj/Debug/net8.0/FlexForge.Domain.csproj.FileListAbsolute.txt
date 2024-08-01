@@ -1,0 +1,12 @@
+C:\Users\rkimov\Desktop\flexforge\FlexForge.Domain\bin\Debug\net8.0\FlexForge.Domain.deps.json
+C:\Users\rkimov\Desktop\flexforge\FlexForge.Domain\bin\Debug\net8.0\FlexForge.Domain.dll
+C:\Users\rkimov\Desktop\flexforge\FlexForge.Domain\bin\Debug\net8.0\FlexForge.Domain.pdb
+C:\Users\rkimov\Desktop\flexforge\FlexForge.Domain\obj\Debug\net8.0\FlexForge.Domain.csproj.AssemblyReference.cache
+C:\Users\rkimov\Desktop\flexforge\FlexForge.Domain\obj\Debug\net8.0\FlexForge.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\rkimov\Desktop\flexforge\FlexForge.Domain\obj\Debug\net8.0\FlexForge.Domain.AssemblyInfoInputs.cache
+C:\Users\rkimov\Desktop\flexforge\FlexForge.Domain\obj\Debug\net8.0\FlexForge.Domain.AssemblyInfo.cs
+C:\Users\rkimov\Desktop\flexforge\FlexForge.Domain\obj\Debug\net8.0\FlexForge.Domain.csproj.CoreCompileInputs.cache
+C:\Users\rkimov\Desktop\flexforge\FlexForge.Domain\obj\Debug\net8.0\FlexForge.Domain.dll
+C:\Users\rkimov\Desktop\flexforge\FlexForge.Domain\obj\Debug\net8.0\refint\FlexForge.Domain.dll
+C:\Users\rkimov\Desktop\flexforge\FlexForge.Domain\obj\Debug\net8.0\FlexForge.Domain.pdb
+C:\Users\rkimov\Desktop\flexforge\FlexForge.Domain\obj\Debug\net8.0\ref\FlexForge.Domain.dll
