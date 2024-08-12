@@ -45,7 +45,7 @@
     <None Include="Areas\Identity\Pages\_ViewImports.cshtml" />
     <None Include="Areas\Identity\Pages\_ViewStart.cshtml" />
     <None Include="Views\Home\Index.cshtml" />
-    <None Include="Views\Home\Privacy.cshtml" />
+    <None Include="Views\Home\About.cshtml" />
     <None Include="Views\Products\AddToCart.cshtml" />
     <None Include="Views\Products\Create.cshtml" />
     <None Include="Views\Products\Delete.cshtml" />
