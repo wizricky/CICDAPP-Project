@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
-namespace Eshop.Web.Controllers
+namespace FlexForge.Web.Controllers
 {
     public class HomeController : Controller
     {
