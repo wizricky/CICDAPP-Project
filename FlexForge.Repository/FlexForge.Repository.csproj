@@ -15,4 +15,8 @@
     <ProjectReference Include="..\FlexForge.Domain\FlexForge.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
 </Project>

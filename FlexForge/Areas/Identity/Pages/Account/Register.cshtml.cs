@@ -128,6 +128,7 @@ namespace FlexForge.Web.Areas.Identity.Pages.Account
                 user.Address = Input.Address;
 
                 user.ShoppingCart = new ShoppingCart();
+                user.FavoriteProducts = new FavoriteProducts();
                 
                 
                 var result = await _userManager.CreateAsync(user, Input.Password);

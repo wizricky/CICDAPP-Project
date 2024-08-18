@@ -44,9 +44,42 @@ namespace FlexForge.Service.Implementation
             return product;
         }
 
+        public List<Product> getProductsByCategory(Guid categoryId)
+        {
+            var products = this.GetAllProducts();
+            var filteredProducts = products
+                .Where(p => p.CategoryId == categoryId)
+                .ToList();
+
+            return filteredProducts;
+        }
+
+        public List<Product> getProductsByCategoryAndSubCategory(Guid categoryId, Guid subCategoryId)
+        {
+            var products = this.GetAllProducts();
+            var filteredProducts = products
+                .Where(p => p.SubCategoryId == subCategoryId)
+                .ToList();
+
+            return filteredProducts;
+        }
+
+        public List<Product> getProductsBySubCategory(Guid subCategoryId)
+        {
+            List<Product> products = this.GetAllProducts();
+            List<Product> filteredProducts = new List<Product>();
+            foreach (Product product in products)
+            {
+                if (product.SubCategoryId == subCategoryId)
+                    filteredProducts.Add(product);
+            }
+            return filteredProducts;
+        }
+
         public void UpdateExistingProduct(Product p)
         {
             _productRepository.Update(p);
         }
+
     }
 }

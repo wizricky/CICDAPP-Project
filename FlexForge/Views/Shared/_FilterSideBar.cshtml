@@ -1,0 +1,80 @@
+﻿<style>
+    .filter-sidebar {
+        background-color: #ffffff;
+        padding: 1rem;
+        border-radius: 0.5rem;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        text-align: center;
+    }
+
+    .category-item {
+        margin-bottom: 1.5rem;
+    }
+
+    .category-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: bold;
+    }
+
+    .subcategories {
+        padding-left: 1rem;
+    }
+
+    .subcategory-item a,
+    .category-header a {
+        text-decoration: none;
+        color: #343a40; /* Dark gray */
+    }
+
+        .subcategory-item a:hover,
+        .category-header a:hover {
+            text-decoration: underline;
+            color: #007bff; /* Bootstrap primary blue */
+        }
+
+    .btn-link {
+        color: #007bff;
+        text-decoration: none;
+        font-size: 1.2rem;
+        padding: 0;
+    }
+
+        .btn-link:hover {
+            color: #0056b3;
+        }
+</style>
+<div class="col-md-3">
+    <div class="filter-sidebar">
+        <h4>Filter</h4>
+        <div id="categoryFilter">
+            @foreach (var category in ViewBag.Categories as IEnumerable<FlexForge.Domain.Domain.Category>)
+            {
+                <div class="category-item">
+                    <div class="category-header">
+                        <span>
+                            <a href="@Url.Action("Index", "Products", new { categoryId = category.Id })">
+                                @category.CategoryName
+                            </a>
+                        </span>
+                        <button class="btn btn-link" onclick="toggleSubCategories('@category.Id')">+</button>
+                    </div>
+                    <div id="subCategories-@category.Id" class="subcategories" style="display: none;">
+                        @foreach (var subCategory in ViewBag.SubCategories as IEnumerable<FlexForge.Domain.Domain.SubCategory>)
+                        {
+                            if (subCategory.CategoryId == category.Id)
+                            {
+                                <div class="subcategory-item">
+                                    <a href="@Url.Action("Index", "Products", new { categoryId = category.Id, subCategoryId = subCategory.Id })">
+                                        @subCategory.SubCategoryName
+                                    </a>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

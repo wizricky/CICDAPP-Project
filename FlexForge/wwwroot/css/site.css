@@ -2,6 +2,7 @@
     box-sizing:border-box;
     margin:0;
     padding:0;
+    color: #f8668a;
 }
 
 html {
@@ -13,7 +14,11 @@ html {
     font-size: 16px;
   }
 }
+.bg-light-opacity {
+     /* Adjust the opacity value as needed */
+}
 
+/*
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
   box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
@@ -174,7 +179,7 @@ color:#222;
 .about-us {
     margin-top:20px;
     margin: 0 auto;
-    max-width: 800px; /* Adjust this value as needed */
+    max-width: 800px; 
     line-height: 1.6;
     padding:15px 0;
     margin-bottom:20px;
@@ -183,3 +188,4 @@ color:#222;
 .about-us h1{
     margin-bottom:20px;
 }
+*/

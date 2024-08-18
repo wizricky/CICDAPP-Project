@@ -1,0 +1,26 @@
+﻿<div>
+    <div class="d-flex justify-content-center mt-4 mb-4">
+        <a class="btn btn-warning text-dark rounded shadow-sm" asp-controller="SubCategory" asp-action="Create">Add new Sub-Category</a>
+    </div>
+    <div class="container products-index">
+        <div class="row">
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                var item = Model[i];
+                <div class="col-md-4 col-lg-3 mb-5">
+                    <div text-center">
+                        <h5 class="card-title">@item.SubCategoryName</h5>
+                        <p>@item.Category</p>
+                    </div>
+                    <div class="card-footer bg-light text-center">
+                        <a asp-controller="SubCategory" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning text-dark rounded shadow-sm">Edit</a>
+                        <form asp-action="Delete" asp-route-id="@item.Id" method="post" style="display:inline;">
+                            <input type="hidden" name="_method" value="DELETE" />
+                            <button type="submit" class="btn btn-warning">Delete</button>
+                        </form>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

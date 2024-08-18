@@ -1,4 +1,13 @@
-﻿// Please see documentation at https://learn.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
+﻿function toggleFavorite(button, productId) {
+        var icon = button.querySelector('.fa-heart');
+    icon.classList.toggle('favorite');
+    if (icon.classList.contains('favorite')) {
+        icon.style.color = 'lightred'; // Filled heart color
+        } else {
+        icon.style.color = 'gray'; // Empty heart color
+        }
 
-// Write your JavaScript code.
+    // Submit the form programmatically
+    document.getElementById('favoriteForm-' + productId).submit();
+    }
+

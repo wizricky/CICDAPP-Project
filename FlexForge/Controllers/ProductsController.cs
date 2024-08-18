@@ -1,36 +1,63 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using FlexForge.Domain.Domain;
 using FlexForge.Service.Interface;
-
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using FlexForge.Services.Interface;
 namespace FlexForge.Web.Controllers
 {
     public class ProductsController : Controller
     {
         private readonly IProductService _productService;
+        private readonly ICategoriesService _categoriesService;
         private readonly IShoppingCartService _shoppingCartService;
+        private readonly IFavoriteProductsService _favoriteProductsService;
 
-        public ProductsController(IProductService productService, IShoppingCartService shoppingCartService)
+        public ProductsController(IProductService productService, IShoppingCartService shoppingCartService, IFavoriteProductsService favoriteProductsService, ICategoriesService categoriesService)
         {
             _productService = productService;
             _shoppingCartService = shoppingCartService;
+            _favoriteProductsService = favoriteProductsService;
+            _categoriesService = categoriesService;
         }
 
-        // GET: Products
-        public IActionResult Index()
+        // GET: Products/Index
+        public IActionResult Index(Guid? categoryId, Guid? subCategoryId)
         {
-            return View(_productService.GetAllProducts());
+            var categories = _categoriesService.GetAllCategories();
+            var subCategories = _categoriesService.GetAllSubCategories();
+            var products = _productService.GetAllProducts(); // Modify as needed for initial view
+
+            if (categoryId.HasValue)
+            {
+                if (subCategoryId.HasValue)
+                {
+                    products = _productService.getProductsByCategoryAndSubCategory(categoryId.Value, subCategoryId.Value);
+                }
+                else
+                {
+                    products = _productService.getProductsByCategory(categoryId.Value);
+                }
+            }
+            else if (subCategoryId.HasValue)
+            {
+                products = _productService.getProductsBySubCategory(subCategoryId.Value);
+            }
+
+            ViewBag.Categories = categories;
+            ViewBag.SubCategories = subCategories;
+
+            return View(products); // Pass filtered products to the view
         }
 
         // GET: Products/Details/5
         public async Task<IActionResult> Details(Guid? id)
         {
+            var categories = _categoriesService.GetAllCategories();
+            var subCategories = _categoriesService.GetAllSubCategories();
             if (id == null)
             {
                 return NotFound();
@@ -41,13 +68,51 @@ namespace FlexForge.Web.Controllers
             {
                 return NotFound();
             }
-
+            ViewBag.Categories = categories;
+            ViewBag.SubCategories = subCategories;
             return View(product);
         }
 
+
+        // GET: Products/SupportedSubCategories
+        [Authorize(Roles = "Admin")]
+        public IActionResult SupportedSubCategories(Guid categoryId)
+        {
+            var subCategories = _categoriesService.GetSupportedSubCategoriesForCategory(categoryId);
+            return Json(subCategories);
+        }
+
+        // GET: Products/FilterByCategories
+        public IActionResult FilterByCategories(Guid? categoryId, Guid? subCategoryId)
+        {
+            List<Product> filteredProducts = new List<Product>();
+
+            if (categoryId.HasValue && subCategoryId.HasValue)
+            {
+                filteredProducts = _productService.getProductsByCategoryAndSubCategory(categoryId.Value, subCategoryId.Value);
+            }
+            else if (categoryId.HasValue)
+            {
+                filteredProducts = _productService.getProductsByCategory(categoryId.Value);
+            }
+            else if (subCategoryId.HasValue)
+            {
+                filteredProducts = _productService.getProductsBySubCategory(subCategoryId.Value);
+            }
+
+            TempData["FilteredProducts"] = filteredProducts;
+            return RedirectToAction("Index");
+        }
+
+
         // GET: Products/Create
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
+            var categories = _categoriesService.GetAllCategories(); // Fetch all categories
+            var subCategories = _categoriesService.GetAllSubCategories();
+            ViewBag.Categories = new SelectList(categories, "Id", "CategoryName"); // Populate ViewBag
+            ViewBag.SubCategories = new SelectList(subCategories, "Id", "SubCategoryName");
             return View();
         }
 
@@ -56,11 +121,21 @@ namespace FlexForge.Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("Id,ProductName,ProductDescription,ProductImage,Price,Rating")] Product product)
+        [Authorize(Roles = "Admin")]
+
+        public IActionResult Create([Bind("Id,ProductName,ProductDescription,ProductImage,Price, CategoryId, AgeGroup, GenderType,SubCategoryId")] Product product)
         {
             if (ModelState.IsValid)
             {
+                Category c = _categoriesService.GetDetailsForCategory(product.CategoryId);
+                SubCategory sc = null;
+                if (product.SubCategoryId == null)
+                {
+                    sc = _categoriesService.GetDetailsForSubCategory(product.SubCategoryId);
+                }
                 product.Id = Guid.NewGuid();
+                product.Category = c;
+                product.SubCategory = sc;
                 _productService.CreateNewProduct(product);
                 return RedirectToAction(nameof(Index));
             }
@@ -86,19 +161,59 @@ namespace FlexForge.Web.Controllers
             return View(ps);
         }
 
+
         [HttpPost]
         public IActionResult AddToCartConfirmed(ProductInShoppingCart model)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             _shoppingCartService.AddToShoppingConfirmed(model, userId);
 
+            return RedirectToAction(nameof(Index));
+        }
 
+        [HttpPost]
+        public IActionResult AddToProductsConfirmed(Guid? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            
+
+            var product = _productService.GetDetailsForProduct(id);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+           
+
+            ProductInFavoriteProducts ps = new ProductInFavoriteProducts();
+
+            if (product != null)
+            {
+                ps.ProductId = product.Id;
+            }
+            if (product != null && this.IsFavoriteProduct(product.Id))
+            {
+                _favoriteProductsService.deleteProductFromFavoriteProducts(userId, product.Id);
+            }
+            else
+            {
+                _favoriteProductsService.AddToShoppingConfirmed(ps, userId);
+            }
 
             return View("Index", _productService.GetAllProducts());
         }
 
+        public bool IsFavoriteProduct(Guid productId)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            return _favoriteProductsService.IsFavorite(userId, productId);
+        }
+
 
         // GET: Products/Edit/5
+        [Authorize(Roles = "Admin")]
+
         public IActionResult Edit(Guid? id)
         {
             if (id == null)
@@ -111,6 +226,10 @@ namespace FlexForge.Web.Controllers
             {
                 return NotFound();
             }
+            var categories = _categoriesService.GetAllCategories(); // Fetch all categories
+            var subCategories = _categoriesService.GetAllSubCategories();
+            ViewBag.Categories = new SelectList(categories, "Id", "CategoryName"); // Populate ViewBag
+            ViewBag.SubCategories = new SelectList(subCategories, "Id", "SubCategoryName");
             return View(product);
         }
 
@@ -119,7 +238,9 @@ namespace FlexForge.Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(Guid id, [Bind("Id,ProductName,ProductDescription,ProductImage,Price,Rating")] Product product)
+        [Authorize(Roles = "Admin")]
+
+        public IActionResult Edit(Guid id, [Bind("Id,ProductName,ProductDescription,ProductImage,Price,CategoryId, AgeGroup, GenderType, SubCategoryId")] Product product)
         {
             if (id != product.Id)
             {
@@ -130,6 +251,14 @@ namespace FlexForge.Web.Controllers
             {
                 try
                 {
+                    Category c = _categoriesService.GetDetailsForCategory(product.CategoryId);
+                    SubCategory sc = null;
+                    if (product.SubCategoryId == null)
+                    {
+                        sc = _categoriesService.GetDetailsForSubCategory(product.SubCategoryId);
+                    }
+                    product.Category = c;
+                    product.SubCategory = sc;
                     _productService.UpdateExistingProduct(product);
                 }
                 catch (DbUpdateConcurrencyException)

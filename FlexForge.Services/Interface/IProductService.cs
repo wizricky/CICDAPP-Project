@@ -3,6 +3,7 @@ using FlexForge.Domain.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -15,5 +16,9 @@ namespace FlexForge.Service.Interface
         void CreateNewProduct(Product p);
         void UpdateExistingProduct(Product p);
         void DeleteProduct(Guid id);
+
+        List<Product> getProductsByCategory(Guid categoryId);
+        List<Product> getProductsBySubCategory(Guid subCategoryId);
+        List<Product> getProductsByCategoryAndSubCategory(Guid categoryId, Guid subCategoryId); 
     }
 }

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace FlexForge.Repository.Migrations
 {
     /// <inheritdoc />
-    public partial class initialmgr : Migration
+    public partial class Addednewmigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -51,6 +51,18 @@ namespace FlexForge.Repository.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Categories",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CategoryName = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Categories", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -176,6 +188,23 @@ namespace FlexForge.Repository.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "FavoriteProducts",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    OwnerId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FavoriteProducts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_FavoriteProducts_AspNetUsers_OwnerId",
+                        column: x => x.OwnerId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Orders",
                 columns: table => new
                 {
@@ -208,6 +237,51 @@ namespace FlexForge.Repository.Migrations
                         column: x => x.OwnerId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SubCategories",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    SubCategoryName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CategoryId = table.Column<int>(type: "int", nullable: false),
+                    CategoryId1 = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SubCategories", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_SubCategories_Categories_CategoryId1",
+                        column: x => x.CategoryId1,
+                        principalTable: "Categories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ProductInFavoriteProducts",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    FavoriteProductsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProductInFavoriteProducts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ProductInFavoriteProducts_FavoriteProducts_FavoriteProductsId",
+                        column: x => x.FavoriteProductsId,
+                        principalTable: "FavoriteProducts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ProductInFavoriteProducts_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -302,9 +376,26 @@ namespace FlexForge.Repository.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_FavoriteProducts_OwnerId",
+                table: "FavoriteProducts",
+                column: "OwnerId",
+                unique: true,
+                filter: "[OwnerId] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Orders_OwnerId",
                 table: "Orders",
                 column: "OwnerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProductInFavoriteProducts_FavoriteProductsId",
+                table: "ProductInFavoriteProducts",
+                column: "FavoriteProductsId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProductInFavoriteProducts_ProductId",
+                table: "ProductInFavoriteProducts",
+                column: "ProductId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProductInOrders_OrderId",
@@ -332,6 +423,11 @@ namespace FlexForge.Repository.Migrations
                 column: "OwnerId",
                 unique: true,
                 filter: "[OwnerId] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SubCategories_CategoryId1",
+                table: "SubCategories",
+                column: "CategoryId1");
         }
 
         /// <inheritdoc />
@@ -353,13 +449,22 @@ namespace FlexForge.Repository.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "ProductInFavoriteProducts");
+
+            migrationBuilder.DropTable(
                 name: "ProductInOrders");
 
             migrationBuilder.DropTable(
                 name: "ProductInShoppingCarts");
 
             migrationBuilder.DropTable(
+                name: "SubCategories");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "FavoriteProducts");
 
             migrationBuilder.DropTable(
                 name: "Orders");
@@ -369,6 +474,9 @@ namespace FlexForge.Repository.Migrations
 
             migrationBuilder.DropTable(
                 name: "ShoppingCarts");
+
+            migrationBuilder.DropTable(
+                name: "Categories");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

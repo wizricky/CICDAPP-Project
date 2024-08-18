@@ -29,6 +29,7 @@ namespace FlexForge.Repository.Implementation
         {
             return entities
                .Include(z => z.ShoppingCart)
+               .Include(z => z.FavoriteProducts)
                .Include("ShoppingCart.ProductInShoppingCarts")
                .Include("ShoppingCart.ProductInShoppingCarts.Product")
                .SingleOrDefault(s => s.Id == id);

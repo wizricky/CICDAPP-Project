@@ -1,5 +1,5 @@
 ﻿@model FlexForge.Domain.Domain.Product
-
+@using FlexForge.Domain.Enum
 @{
     ViewData["Title"] = "Edit";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -34,11 +34,45 @@
                 <input asp-for="Price" class="form-control" />
                 <span asp-validation-for="Price" class="text-danger"></span>
             </div>
+
+            <!-- GenderType Dropdown -->
             <div class="form-group">
-                <label asp-for="Rating" class="control-label"></label>
-                <input asp-for="Rating" class="form-control" />
-                <span asp-validation-for="Rating" class="text-danger"></span>
+                <label asp-for="GenderType" class="control-label">Gender Type</label>
+                <select asp-for="GenderType" class="form-control" asp-items="Html.GetEnumSelectList<GenderType>()">
+                    <option value="">Select Gender Type</option>
+                </select>
+                <span asp-validation-for="GenderType" class="text-danger"></span>
             </div>
+
+            <!-- AgeGroup Dropdown -->
+            <div class="form-group">
+                <label asp-for="AgeGroup" class="control-label">Age Group</label>
+                <select asp-for="AgeGroup" class="form-control" asp-items="Html.GetEnumSelectList<AgeGroup>()">
+                    <option value="">Select Age Group</option>
+                </select>
+                <span asp-validation-for="AgeGroup" class="text-danger"></span>
+            </div>
+            <!-- Category Dropdown -->
+            <div class="form-group">
+                <label asp-for="CategoryId" class="control-label">Category</label>
+                <select id="CategorySelect" name="CategoryId" class="form-control">
+                    <option value="">Select Category</option>
+                    @foreach (var category in ViewBag.Categories as IEnumerable<SelectListItem>)
+                    {
+                        <option value="@category.Value">@category.Text</option>
+                    }
+                </select>
+            </div>
+
+            <!-- SubCategory Dropdown -->
+            <div class="form-group">
+                <label asp-for="SubCategoryId" class="control-label">SubCategory</label>
+                <select id="SubCategorySelect" name="SubCategoryId" class="form-control">
+                    <option value="">Select SubCategory</option>
+                    <!-- Options will be populated by JavaScript -->
+                </select>
+            </div>
+
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
@@ -52,4 +86,31 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#CategorySelect').change(function () {
+                var categoryId = $(this).val();
+                $.ajax({
+                    url: '@Url.Action("SupportedSubCategories", "Products")',
+                    type: 'GET',
+                    data: { categoryId: categoryId },
+                    success: function (data) {
+                        var $subCategorySelect = $('#SubCategorySelect');
+                        $subCategorySelect.empty(); // Clear existing options
+                        $subCategorySelect.append('<option value="">Select SubCategory</option>');
+
+                        $.each(data, function (index, item) {
+                            $subCategorySelect.append(
+                                $('<option></option>').val(item.id).text(item.subCategoryName)
+                            );
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+
 }

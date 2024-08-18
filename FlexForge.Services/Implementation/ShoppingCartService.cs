@@ -14,7 +14,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EShop.Service.Implementation
+namespace FlexForge.Service.Implementation
 {
     public class ShoppingCartService : IShoppingCartService
     {

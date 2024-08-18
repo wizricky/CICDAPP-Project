@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FlexForge.Repository.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240731080931_initialmgr")]
-    partial class initialmgr
+    [Migration("20240818091757_Added Sizes and ProductBySizes tables")]
+    partial class AddedSizesandProductBySizestables
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,39 @@ namespace FlexForge.Repository.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("FlexForge.Domain.Domain.Category", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CategoryName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Categories");
+                });
+
+            modelBuilder.Entity("FlexForge.Domain.Domain.FavoriteProducts", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("OwnerId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OwnerId")
+                        .IsUnique()
+                        .HasFilter("[OwnerId] IS NOT NULL");
+
+                    b.ToTable("FavoriteProducts");
+                });
 
             modelBuilder.Entity("FlexForge.Domain.Domain.Order", b =>
                 {
@@ -51,6 +84,13 @@ namespace FlexForge.Repository.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("CategoryId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("GenderType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("Price")
                         .HasColumnType("int");
 
@@ -66,9 +106,37 @@ namespace FlexForge.Repository.Migrations
                     b.Property<int>("Rating")
                         .HasColumnType("int");
 
+                    b.Property<Guid?>("SubCategoryId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
 
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("SubCategoryId");
+
                     b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("FlexForge.Domain.Domain.ProductInFavoriteProducts", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("FavoriteProductsId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FavoriteProductsId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductInFavoriteProducts");
                 });
 
             modelBuilder.Entity("FlexForge.Domain.Domain.ProductInOrder", b =>
@@ -119,6 +187,30 @@ namespace FlexForge.Repository.Migrations
                     b.ToTable("ProductInShoppingCarts");
                 });
 
+            modelBuilder.Entity("FlexForge.Domain.Domain.ProductsBySize", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("SizeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("SizeId");
+
+                    b.ToTable("ProductBySizes");
+                });
+
             modelBuilder.Entity("FlexForge.Domain.Domain.ShoppingCart", b =>
                 {
                     b.Property<Guid>("Id")
@@ -135,6 +227,41 @@ namespace FlexForge.Repository.Migrations
                         .HasFilter("[OwnerId] IS NOT NULL");
 
                     b.ToTable("ShoppingCarts");
+                });
+
+            modelBuilder.Entity("FlexForge.Domain.Domain.Size", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("SizeType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Sizes");
+                });
+
+            modelBuilder.Entity("FlexForge.Domain.Domain.SubCategory", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("CategoryId")
+                        .IsRequired()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("SubCategoryName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("SubCategories");
                 });
 
             modelBuilder.Entity("FlexForge.Domain.Identity.FlexForgeApplicationUser", b =>
@@ -348,6 +475,15 @@ namespace FlexForge.Repository.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("FlexForge.Domain.Domain.FavoriteProducts", b =>
+                {
+                    b.HasOne("FlexForge.Domain.Identity.FlexForgeApplicationUser", "Owner")
+                        .WithOne("FavoriteProducts")
+                        .HasForeignKey("FlexForge.Domain.Domain.FavoriteProducts", "OwnerId");
+
+                    b.Navigation("Owner");
+                });
+
             modelBuilder.Entity("FlexForge.Domain.Domain.Order", b =>
                 {
                     b.HasOne("FlexForge.Domain.Identity.FlexForgeApplicationUser", "Owner")
@@ -355,6 +491,40 @@ namespace FlexForge.Repository.Migrations
                         .HasForeignKey("OwnerId");
 
                     b.Navigation("Owner");
+                });
+
+            modelBuilder.Entity("FlexForge.Domain.Domain.Product", b =>
+                {
+                    b.HasOne("FlexForge.Domain.Domain.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId");
+
+                    b.HasOne("FlexForge.Domain.Domain.SubCategory", "SubCategory")
+                        .WithMany()
+                        .HasForeignKey("SubCategoryId");
+
+                    b.Navigation("Category");
+
+                    b.Navigation("SubCategory");
+                });
+
+            modelBuilder.Entity("FlexForge.Domain.Domain.ProductInFavoriteProducts", b =>
+                {
+                    b.HasOne("FlexForge.Domain.Domain.FavoriteProducts", "FavoriteProducts")
+                        .WithMany("ProductInFavorite")
+                        .HasForeignKey("FavoriteProductsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FlexForge.Domain.Domain.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("FavoriteProducts");
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("FlexForge.Domain.Domain.ProductInOrder", b =>
@@ -395,6 +565,25 @@ namespace FlexForge.Repository.Migrations
                     b.Navigation("ShoppingCart");
                 });
 
+            modelBuilder.Entity("FlexForge.Domain.Domain.ProductsBySize", b =>
+                {
+                    b.HasOne("FlexForge.Domain.Domain.Product", "Product")
+                        .WithMany("ProductBySizes")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FlexForge.Domain.Domain.Size", "Size")
+                        .WithMany()
+                        .HasForeignKey("SizeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("Size");
+                });
+
             modelBuilder.Entity("FlexForge.Domain.Domain.ShoppingCart", b =>
                 {
                     b.HasOne("FlexForge.Domain.Identity.FlexForgeApplicationUser", "Owner")
@@ -402,6 +591,17 @@ namespace FlexForge.Repository.Migrations
                         .HasForeignKey("FlexForge.Domain.Domain.ShoppingCart", "OwnerId");
 
                     b.Navigation("Owner");
+                });
+
+            modelBuilder.Entity("FlexForge.Domain.Domain.SubCategory", b =>
+                {
+                    b.HasOne("FlexForge.Domain.Domain.Category", "Category")
+                        .WithMany("SubCategories")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -455,6 +655,16 @@ namespace FlexForge.Repository.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("FlexForge.Domain.Domain.Category", b =>
+                {
+                    b.Navigation("SubCategories");
+                });
+
+            modelBuilder.Entity("FlexForge.Domain.Domain.FavoriteProducts", b =>
+                {
+                    b.Navigation("ProductInFavorite");
+                });
+
             modelBuilder.Entity("FlexForge.Domain.Domain.Order", b =>
                 {
                     b.Navigation("ProductsInOrder");
@@ -462,6 +672,8 @@ namespace FlexForge.Repository.Migrations
 
             modelBuilder.Entity("FlexForge.Domain.Domain.Product", b =>
                 {
+                    b.Navigation("ProductBySizes");
+
                     b.Navigation("ProductInShoppingCarts");
 
                     b.Navigation("ProductsInOrder");
@@ -474,6 +686,9 @@ namespace FlexForge.Repository.Migrations
 
             modelBuilder.Entity("FlexForge.Domain.Identity.FlexForgeApplicationUser", b =>
                 {
+                    b.Navigation("FavoriteProducts")
+                        .IsRequired();
+
                     b.Navigation("Order");
 
                     b.Navigation("ShoppingCart")

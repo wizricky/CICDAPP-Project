@@ -6,69 +6,95 @@
     <title>@ViewData["Title"] - FitnessApp</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-     <link rel="stylesheet" href="../Views/Content/Site.css" type="text/css" />
-</head>
-<body>
-    <nav class="nav">
-        <div class="container">
-            <h1 class="logo">Flex Forge</h1>
-            <ul>
-                <li class="nav-item">
-                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="About">About</a>
-                </li>
-                
-            </ul>
-        </div>
-    </nav>
-    
-        
-     @RenderBody()
-        
-  <div class="container-footer">
-    <hr />
-    <footer class="footer">
-      
-        <ul class="social-icon">
-            <li class="social-icon__item">
-                <a class="social-icon__link" href="#">
-                    <ion-icon name="logo-facebook"></ion-icon>
-                </a>
-            </li>
-            <li class="social-icon__item">
-                <a class="social-icon__link" href="#">
-                    <ion-icon name="logo-twitter"></ion-icon>
-                </a>
-            </li>
-            <li class="social-icon__item">
-                <a class="social-icon__link" href="#">
-                    <ion-icon name="logo-linkedin"></ion-icon>
-                </a>
-            </li>
-            <li class="social-icon__item">
-                <a class="social-icon__link" href="#">
-                    <ion-icon name="logo-instagram"></ion-icon>
-                </a>
-            </li>
-        </ul>
-        <ul class="menu">
-            <li class="nav-item">
-                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="About">About</a>
-            </li>
-            
+    <link rel="stylesheet" href="../Views/Content/Site.css" type="text/css" />
 
-        </ul>
-        <p>&copy;2021 Matej Riste | All Rights Reserved</p>
-    </footer>
-    </div>
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+    <!-- Ionicons for social media icons -->
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-    
+
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+
+        .content-wrapper {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .footer {
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="content-wrapper">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="height: 10vh;">
+            <div class="container">
+                <a class="navbar-brand" href="#">Flex Forge</a>
+                <form class="d-flex ms-auto me-auto" style="width: 40%;left: 2%">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-light" type="submit">Search</button>
+                </form>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item me-3">
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item me-3">
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="About">About</a>
+                        </li>
+                        <li class="nav-item me-3">
+                            <a class="nav-link" asp-area="" asp-controller="Products" asp-action="Index">Products</a>
+                        </li>
+                        <li class="nav-item me-3">
+                            <a class="nav-link" asp-area="" asp-controller="FavoriteProducts" asp-action="Index"><i class="fa fa-heart" style="font-size: 1.25rem;"></i></a>
+                        </li>
+                        <li class="nav-item me-3">
+                            <a class="nav-link" asp-area="" asp-controller="ShoppingCarts" asp-action="Index"><i class="fa fa-shopping-cart" style="font-size:22px"></i></a>
+                        </li>
+                    </ul>
+                    <partial name="_LoginPartial" />
+                </div>
+            </div>
+        </nav>
+
+        <main role="main" class="flex-shrink-0">
+            @RenderBody()
+        </main>
+
+        <footer class="bg-dark text-light py-3 footer">
+            <div class="container text-center">
+                <h5 class="text-uppercase mb-3">Follow Us</h5>
+                <ul class="list-unstyled d-flex justify-content-center mb-3">
+                    <li class="me-3">
+                        <a href="#" class="text-light fs-4"><ion-icon name="logo-facebook"></ion-icon></a>
+                    </li>
+                    <li class="me-3">
+                        <a href="#" class="text-light fs-4"><ion-icon name="logo-twitter"></ion-icon></a>
+                    </li>
+                    <li class="me-3">
+                        <a href="#" class="text-light fs-4"><ion-icon name="logo-linkedin"></ion-icon></a>
+                    </li>
+                    <li>
+                        <a href="#" class="text-light fs-4"><ion-icon name="logo-instagram"></ion-icon></a>
+                    </li>
+                </ul>
+                <p class="mb-0">&copy;2021 Matej Riste | All Rights Reserved</p>
+            </div>
+        </footer>
+    </div>
+
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
