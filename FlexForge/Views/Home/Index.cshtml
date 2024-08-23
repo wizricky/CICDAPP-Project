@@ -1,10 +1,42 @@
-﻿@{
+﻿@model List<FlexForge.Domain.Domain.Category>
+@{
     ViewData["Title"] = "Home Page";
 }
-
 <div class="main">
     <div class="container">
-    <h1 class="display-4 title">Welcome To Our Gym Store</h1>
+        <div id="gymCarousel" class="carousel slide" data-bs-ride="carousel">
+            
+            <div class="carousel-inner">
+                @{
+                    bool isActive = true;
+                }
+                @foreach(var category in Model)
+                {
+                   
+                    <div class="carousel-item @(isActive ? "active" : "")">
+                        <a href="@Url.Action("Index", "Products", new { categoryId = category.Id })">
+                        <img src="@category.CategoryImage" class="d-block w-100" alt="First slide">
+                        </a>
+                        <div class="carousel-caption d-none d-md-block">
+                            <h1 class="display-4 title">@category.CategoryName</h1>
+                        </div>
+                    </div>
+                    
+                    isActive = false;
+                }
+              
+               
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#gymCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#gymCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
     </div>
 </div>
+
 

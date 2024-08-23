@@ -55,7 +55,7 @@ namespace FlexForge.Web.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("Id,CategoryName")] Category category)
+        public IActionResult Create([Bind("Id,CategoryName,CategoryImage")] Category category)
         {          
                 category.Id = Guid.NewGuid();
                 _categoriesService.CreateNewCategory(category);
@@ -84,7 +84,7 @@ namespace FlexForge.Web.Controllers
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
 
-        public IActionResult Edit(Guid id, [Bind("Id,CategoryName")] Category category)
+        public IActionResult Edit(Guid id, [Bind("Id,CategoryName,CategoryImage")] Category category)
         {
             if (id != category.Id)
             {

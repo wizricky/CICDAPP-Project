@@ -26,6 +26,9 @@
                 <li class="nav-item">
                     <a class="nav-link" id="subcategories-tab" data-bs-toggle="pill" href="#subcategories-content">Sub-Categories</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="subcategories-tab" data-bs-toggle="pill" href="#import-content">Import Products</a>
+                </li>
             </ul>
         </div>
 
@@ -123,6 +126,11 @@
                                     <input asp-for="Category.CategoryName" class="form-control" />
                                     <span asp-validation-for="Category.CategoryName" class="text-danger"></span>
                                 </div>
+                                <div class="form-group">
+                                    <label asp-for="Category.CategoryImage" class="control-label"></label>
+                                    <input asp-for="Category.CategoryImage" class="form-control" />
+                                    <span asp-validation-for="Category.CategoryImage" class="text-danger"></span>
+                                </div>
                                 <div class="form-group text-center">
                                     <input type="submit" value="Create" class="btn btn-primary btn-lg" />
                                 </div>
@@ -161,6 +169,18 @@
                     </div>
 
                     <!-- Your subcategories content goes here -->
+                </div>
+                <div class="tab-pane fade" id="import-content">
+                    <form asp-controller="Products" asp-action="ImportProducts" method="post" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <input type="file" name="file" class="form-control" />
+                        </div>
+
+                        </hr>
+
+                        <button type="submit" class="btn btn-success">Import Products</button>
+
+                    </form>
                 </div>
             </div>
         </div>

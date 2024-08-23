@@ -11,6 +11,7 @@ namespace FlexForge.Domain.Domain
     {
         [Required]
         public string? CategoryName { get; set; }
+        public string? CategoryImage {  get; set; } 
         public virtual ICollection<SubCategory> SubCategories { get; set; } = new List<SubCategory>();
     }
 }

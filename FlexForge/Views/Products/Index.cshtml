@@ -1,4 +1,17 @@
-﻿<div style="background-image: url('@Url.Content("~/images/productsindex.jpg")'); background-size: cover; background-position: center; padding: 2rem;">
+﻿<style>
+    .products-index .card {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+    .products-index .card-body {
+        flex-grow: 1;
+    }
+    .products-index .card-footer {
+        margin-top: auto;
+    }
+</style>
+<div style="background-image: url('@Url.Content("~/images/productsindex.jpg")'); background-size: cover; background-position: center; padding: 2rem;">
     <div class="container">
         <div class="row">
             <!-- Sidebar for filtering -->

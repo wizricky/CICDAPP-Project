@@ -14,178 +14,80 @@ html {
     font-size: 16px;
   }
 }
-.bg-light-opacity {
-     /* Adjust the opacity value as needed */
-}
-
-/*
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
-}
-
-body {
-color:#222;
-  
-}
-.container{
-    max-width:1200px;
-    margin:0 auto;
-
-}
-.nav-link{
-    font-size:22px;
-    font-weight:bold;
-    font-family:'MS PGothic';
-
-}
 .main {
-    background-image: url("https://img.freepik.com/premium-photo/3d-rendering-black-dumbbells-floor-dark-concept-fitness-room-with-training-equipments-back_67155-14961.jpg");
-    background-repeat:no-repeat;
-    background-size:cover;
-    color:white;
-    background-position:bottom;
-    height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    text-align:center;
-    margin-bottom:20px;
-    z-index:-2;
-    position:relative;
-
-    
-}
-.main::before{
-    content:"";
-    position:absolute;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    background-color:rgba(0,0,0,0.5);
-    z-index:-1;
-
-}
-.nav{
-    position:fixed;
-    top:0;
-    left:0;
-    background-color:#222;
-    right:0;
-    transition:all 0.4s ease-in-out;
-}
-.nav .container{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:20px 0;
-    transition:all 0.4s ease-in-out;
-}
-.nav ul{
-    display:flex;
-    list-style-type:none;
-    align-items:center;
-    justify-content:center
-}
-.nav a{
-    color:white;
-    text-decoration:none;
-
-}
-
-.logo{
-    color:white;
-    
-}
-.footer{
-    color:white;
-    text-align:center;
-   
-   
-    
-}
-.container-footer{
-    background-color:blue;
-}
-.social-icon {
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    list-style-type: none;
-}
-.social-icon a{
-     text-decoration:none;
-     color:black;
-     margin-left:12px;
-     font-size:25px;
-
-     
-}
-.menu {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    list-style-type: none;
+    background-color: #f8f9fa;
 }
 
-    .menu a {
-        text-decoration: none;
-        color: black;
-        margin-left: 12px;
-        font-size: 25px;
-    }
+.carousel-inner img {
+    width: 100%; /* Image takes full width of carousel item */
+    height: auto; /* Auto height to maintain aspect ratio */
+    object-fit: cover; /* Ensure image covers the area while maintaining aspect ratio */
+}
 
-    .footer p{
-        color :black;
+.carousel-item {
+    height: 600px; /* Height of the carousel item */
+    overflow: hidden; /* Hide overflow to ensure clean edges */
+}
 
-    }
-    .title{
-        font-family:'MS Gothic';
-        font-weight:bold;
-
-    }
-
-.main-about {
-    background-image: url("https://img.freepik.com/premium-photo/3d-rendering-black-dumbbells-floor-dark-concept-fitness-room-with-training-equipments-back_67155-14961.jpg");
-    background-repeat: no-repeat;
-    background-size: cover;
-    color: white;
-    background-position: bottom;
-    height: 60vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.carousel-caption {
+    position: absolute;
+    top: 0; /* Aligns caption to the top */
+    left: 0;
+    right: 0;
+    bottom: auto; /* Removes bottom alignment */
+    padding-top: 10px; /* Adjust padding as needed */
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
     text-align: center;
-    margin-bottom: 20px;
-    z-index: -2;
-    position: relative;
 }
 
-    .main-about::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0,0,0,0.5);
-        z-index: -1;
-    }
+.title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #ffffff;
+}
+/* Styling the main container */
 .about-us {
-    margin-top:20px;
-    margin: 0 auto;
-    max-width: 800px; 
-    line-height: 1.6;
-    padding:15px 0;
-    margin-bottom:20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
 
+/* Styling the bubble container */
+.bubble {
+    background-color: #f8f9fa; /* Light grey background */
+    border-radius: 20px;
+    position: relative;
+    max-width: 600px;
 }
-.about-us h1{
-    margin-bottom:20px;
+
+    /* Adding the tail of the bubble */
+    .bubble::before {
+        content: '';
+        position: absolute;
+        bottom: -20px; /* Adjust based on bubble height */
+        left: 50px; /* Adjust position from the left */
+        width: 0;
+        height: 0;
+        border: 20px solid transparent;
+        border-top-color: #f8f9fa;
+    }
+
+/* Styling the title inside the bubble */
+.bubble-title {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    text-align: center;
+    color: #334464; /* Dark blue color */
 }
-*/
+
+/* Styling the text inside the bubble */
+.bubble-text {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #333;
+}

@@ -295,6 +295,24 @@ namespace FlexForge.Web.Controllers
             _productService.DeleteProduct(id);
             return RedirectToAction(nameof(Index));
         }
+        [HttpPost]
+        public IActionResult ImportProducts(IFormFile file)
+        {
+            if (file == null || file.Length == 0)
+            {
+                TempData["Error"] = "Please upload a valid Excel file.";
+                return RedirectToAction("Index");
+            }
+
+            using (var stream = new MemoryStream())
+            {
+                file.CopyTo(stream);
+                _productService.ImportProductsFromExcel(stream);
+            }
+
+            TempData["Success"] = "Products imported successfully!";
+            return RedirectToAction("Index");
+        }
 
 
     }
