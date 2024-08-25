@@ -1,8 +1,6 @@
 ﻿using FlexForge.Domain;
-using FlexForge.Domain.Domain;
 using FlexForge.Services.Interface;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Diagnostics;
 
 namespace FlexForge.Web.Controllers

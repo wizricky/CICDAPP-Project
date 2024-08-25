@@ -17,8 +17,5 @@ namespace FlexForge.Service.Interface
         void UpdateExistingProduct(Product p);
         void DeleteProduct(Guid id);
         void ImportProductsFromExcel(Stream fileStream);
-        List<Product> getProductsByCategory(Guid categoryId);
-        List<Product> getProductsBySubCategory(Guid subCategoryId);
-        List<Product> getProductsByCategoryAndSubCategory(Guid categoryId, Guid subCategoryId); 
     }
 }

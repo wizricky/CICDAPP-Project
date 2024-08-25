@@ -1,9 +1,6 @@
-﻿
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Security.Claims;
 using FlexForge.Domain.Domain;
-using FlexForge.Service.Interface;
 using Microsoft.AspNetCore.Authorization;
 using FlexForge.Services.Interface;
 namespace FlexForge.Web.Controllers
@@ -23,26 +20,6 @@ namespace FlexForge.Web.Controllers
         {
             return View(_categoriesService.GetAllCategories());
         }
-
-       /*
-
-        // GET: Products/Details/5
-        public async Task<IActionResult> Details(Guid? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var product = _productService.GetDetailsForProduct(id);
-            if (product == null)
-            {
-                return NotFound();
-            }
-
-            return View(product);
-        }
-       */
 
         // GET: Category/Create
         public IActionResult Create()
@@ -132,7 +109,6 @@ namespace FlexForge.Web.Controllers
             _categoriesService.DeleteCategory(id);
             return RedirectToAction(nameof(Index));
         }
-
 
     }
 }

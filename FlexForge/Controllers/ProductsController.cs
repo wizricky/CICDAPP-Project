@@ -1,5 +1,4 @@
-﻿
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using FlexForge.Domain.Domain;
@@ -7,6 +6,7 @@ using FlexForge.Service.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using FlexForge.Services.Interface;
+using FlexForge.Domain.Enum;
 namespace FlexForge.Web.Controllers
 {
     public class ProductsController : Controller
@@ -25,33 +25,38 @@ namespace FlexForge.Web.Controllers
         }
 
         // GET: Products/Index
-        public IActionResult Index(Guid? categoryId, Guid? subCategoryId)
+        public IActionResult Index(string[] genderType, string[] ageGroup, string[] categoryId, string[] subCategoryId)
         {
             var categories = _categoriesService.GetAllCategories();
             var subCategories = _categoriesService.GetAllSubCategories();
-            var products = _productService.GetAllProducts(); // Modify as needed for initial view
+            List<Product> products = _productService.GetAllProducts();
 
-            if (categoryId.HasValue)
+            // Apply filters
+            if (genderType != null && genderType.Length > 0)
             {
-                if (subCategoryId.HasValue)
-                {
-                    products = _productService.getProductsByCategoryAndSubCategory(categoryId.Value, subCategoryId.Value);
-                }
-                else
-                {
-                    products = _productService.getProductsByCategory(categoryId.Value);
-                }
-            }
-            else if (subCategoryId.HasValue)
-            {
-                products = _productService.getProductsBySubCategory(subCategoryId.Value);
+                products = products.Where(p => genderType.Contains(p.GenderType.ToString())).ToList();
             }
 
-            ViewBag.Categories = categories;
-            ViewBag.SubCategories = subCategories;
+            if (ageGroup != null && ageGroup.Length > 0)
+            {
+                products = products.Where(p => ageGroup.Contains(p.AgeGroup.ToString())).ToList();
+            }
 
-            return View(products); // Pass filtered products to the view
+            if (categoryId != null && categoryId.Length > 0)
+            {
+                products = products.Where(p => categoryId.Contains(p.CategoryId.ToString())).ToList();
+            }
+
+            if (subCategoryId != null && subCategoryId.Length > 0)
+            {
+                products = products.Where(p => subCategoryId.Contains(p.SubCategoryId.ToString())).ToList();
+            }
+            ViewBag.Categories = _categoriesService.GetAllCategories(); 
+            ViewBag.SubCategories = _categoriesService.GetAllSubCategories(); 
+
+            return View(products);
         }
+
 
         // GET: Products/Details/5
         public async Task<IActionResult> Details(Guid? id)
@@ -68,8 +73,10 @@ namespace FlexForge.Web.Controllers
             {
                 return NotFound();
             }
+            //Populate viewbag for filtering products
             ViewBag.Categories = categories;
             ViewBag.SubCategories = subCategories;
+            ViewBag.IsFavoriteProduct = this.IsFavoriteProduct(id);
             return View(product);
         }
 
@@ -81,30 +88,7 @@ namespace FlexForge.Web.Controllers
             var subCategories = _categoriesService.GetSupportedSubCategoriesForCategory(categoryId);
             return Json(subCategories);
         }
-
-        // GET: Products/FilterByCategories
-        public IActionResult FilterByCategories(Guid? categoryId, Guid? subCategoryId)
-        {
-            List<Product> filteredProducts = new List<Product>();
-
-            if (categoryId.HasValue && subCategoryId.HasValue)
-            {
-                filteredProducts = _productService.getProductsByCategoryAndSubCategory(categoryId.Value, subCategoryId.Value);
-            }
-            else if (categoryId.HasValue)
-            {
-                filteredProducts = _productService.getProductsByCategory(categoryId.Value);
-            }
-            else if (subCategoryId.HasValue)
-            {
-                filteredProducts = _productService.getProductsBySubCategory(subCategoryId.Value);
-            }
-
-            TempData["FilteredProducts"] = filteredProducts;
-            return RedirectToAction("Index");
-        }
-
-
+      
         // GET: Products/Create
         [Authorize(Roles = "Admin")]
         public IActionResult Create()
@@ -163,6 +147,7 @@ namespace FlexForge.Web.Controllers
 
 
         [HttpPost]
+        [Authorize]
         public IActionResult AddToCartConfirmed(ProductInShoppingCart model)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -172,20 +157,15 @@ namespace FlexForge.Web.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult AddToProductsConfirmed(Guid? id)
         {
             if (id == null)
             {
                 return NotFound();
-            }
-
-            
-
+            }            
             var product = _productService.GetDetailsForProduct(id);
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-           
-
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);          
             ProductInFavoriteProducts ps = new ProductInFavoriteProducts();
 
             if (product != null)
@@ -198,13 +178,13 @@ namespace FlexForge.Web.Controllers
             }
             else
             {
-                _favoriteProductsService.AddToShoppingConfirmed(ps, userId);
+                _favoriteProductsService.AddToFavoriteProductsConfirmed(ps, userId);
             }
 
-            return View("Index", _productService.GetAllProducts());
+            return Json(new { success = true }); ;
         }
 
-        public bool IsFavoriteProduct(Guid productId)
+        public bool IsFavoriteProduct(Guid? productId)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             return _favoriteProductsService.IsFavorite(userId, productId);

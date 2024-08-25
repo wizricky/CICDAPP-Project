@@ -1,0 +1,8 @@
+﻿@inject SignInManager<FlexForgeApplicationUser> SignInManager
+@inject UserManager<FlexForgeApplicationUser> UserManager
+@model FlexForge.Domain.Domain.Product
+@{
+    Layout = null; 
+}
+
+@Html.Partial("~/Views/Fragments/ProductDetails.cshtml")

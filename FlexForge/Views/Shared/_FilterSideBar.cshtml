@@ -7,7 +7,7 @@
         text-align: center;
     }
 
-    .category-item {
+    .category-item, .filter-section {
         margin-bottom: 1.5rem;
     }
 
@@ -44,37 +44,103 @@
         .btn-link:hover {
             color: #0056b3;
         }
+
+    /* Adjust size of filtering elements */
+    .filter-section label, .form-check-label {
+        font-size: 1rem; /* Ensure consistent text size across all filtering options */
+    }
 </style>
+
 <div class="col-md-3">
     <div class="filter-sidebar">
         <h4>Filter</h4>
-        <div id="categoryFilter">
-            @foreach (var category in ViewBag.Categories as IEnumerable<FlexForge.Domain.Domain.Category>)
-            {
-                <div class="category-item">
-                    <div class="category-header">
-                        <span>
-                            <a href="@Url.Action("Index", "Products", new { categoryId = category.Id })">
-                                @category.CategoryName
-                            </a>
-                        </span>
-                        <button class="btn btn-link" onclick="toggleSubCategories('@category.Id')">+</button>
-                    </div>
-                    <div id="subCategories-@category.Id" class="subcategories" style="display: none;">
-                        @foreach (var subCategory in ViewBag.SubCategories as IEnumerable<FlexForge.Domain.Domain.SubCategory>)
-                        {
-                            if (subCategory.CategoryId == category.Id)
-                            {
-                                <div class="subcategory-item">
-                                    <a href="@Url.Action("Index", "Products", new { categoryId = category.Id, subCategoryId = subCategory.Id })">
-                                        @subCategory.SubCategoryName
-                                    </a>
-                                </div>
-                            }
-                        }
-                    </div>
+
+        <form id="filterForm" method="get" action="@Url.Action("Index", "Products")">
+
+            <!-- Gender Type Filter -->
+            <div class="filter-section">
+                <div class="category-header">
+                    <h5>Gender</h5>
+                    <button type="button" class="btn btn-link" onclick="toggleFilter('genderType')">+</button>
                 </div>
-            }
-        </div>
+                <div id="genderTypeFilter" style="display: none;">
+                    @foreach (var gender in Enum.GetValues(typeof(FlexForge.Domain.Enum.GenderType)))
+                    {
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="genderType" id="gender-@gender" value="@gender">
+                            <label class="form-check-label" for="gender-@gender">
+                                @gender
+                            </label>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <!-- Age Group Filter -->
+            <div class="filter-section">
+                <div class="category-header">
+                    <h5>Age Group</h5>
+                    <button type="button" class="btn btn-link" onclick="toggleFilter('ageGroup')">+</button>
+                </div>
+                <div id="ageGroupFilter" style="display: none;">
+                    @foreach (var ageGroup in Enum.GetValues(typeof(FlexForge.Domain.Enum.AgeGroup)))
+                    {
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="ageGroup" id="ageGroup-@ageGroup" value="@ageGroup">
+                            <label class="form-check-label" for="ageGroup-@ageGroup">
+                                @ageGroup
+                            </label>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <!-- Category and Subcategory Filter -->
+            <div id="categoryFilter">
+                @foreach (var category in ViewBag.Categories as IEnumerable<FlexForge.Domain.Domain.Category>)
+                {
+                    <div class="category-item">
+                        <div class="category-header">
+                            <span>
+                                <input type="checkbox" name="categoryId" value="@category.Id" id="category-@category.Id">
+                                <label for="category-@category.Id">@category.CategoryName</label>
+                            </span>
+                            <button type="button" class="btn btn-link" onclick="toggleSubCategories('@category.Id')">+</button>
+                        </div>
+                        <div id="subCategories-@category.Id" class="subcategories" style="display: none;">
+                            @foreach (var subCategory in ViewBag.SubCategories as IEnumerable<FlexForge.Domain.Domain.SubCategory>)
+                            {
+                                if (subCategory.CategoryId == category.Id)
+                                {
+                                    <div class="subcategory-item">
+                                        <input type="checkbox" name="subCategoryId" value="@subCategory.Id" id="subCategory-@subCategory.Id">
+                                        <label for="subCategory-@subCategory.Id">@subCategory.SubCategoryName</label>
+                                    </div>
+                                }
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <!-- Submit Button -->
+            <div class="filter-section">
+                <button type="submit" class="btn btn-primary">Apply Filters</button>
+                <a href="@Url.Action("Index", "Products")" class="btn btn-secondary">Clear Filters</a>
+            </div>
+        </form>
+
     </div>
 </div>
+
+<script>
+    function toggleFilter(filterId) {
+        var filterElement = document.getElementById(filterId + 'Filter');
+        filterElement.style.display = (filterElement.style.display === 'none') ? 'block' : 'none';
+    }
+
+    function toggleSubCategories(categoryId) {
+        var subCategoriesElement = document.getElementById('subCategories-' + categoryId);
+        subCategoriesElement.style.display = (subCategoriesElement.style.display === 'none') ? 'block' : 'none';
+    }
+</script>

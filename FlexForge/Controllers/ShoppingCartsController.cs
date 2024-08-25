@@ -12,9 +12,11 @@ using Microsoft.Extensions.Options;
 using FlexForge.Domain;
 using Stripe;
 using FlexForge.Service.Interface;
+using Microsoft.AspNetCore.Authorization;
 
 namespace FlexForge.Web.Controllers
 {
+    [Authorize]
     public class ShoppingCartsController : Controller
     {
         private readonly IShoppingCartService _shoppingCartService;

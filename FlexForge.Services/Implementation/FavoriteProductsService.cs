@@ -1,8 +1,7 @@
 ﻿using FlexForge.Domain.Domain;
-using FlexForge.Domain.DTO;
+using FlexForge.Domain.Identity;
 using FlexForge.Repository.Interface;
 using FlexForge.Service.Interface;
-using System.Text;
 
 namespace FlexForge.Service.Implementation
 {
@@ -11,26 +10,22 @@ namespace FlexForge.Service.Implementation
         private readonly IRepository<FavoriteProducts> _favoriteProductsRepository;
         private readonly IRepository<ProductInFavoriteProducts> _productInFavoriteProductsRepository;
         private readonly IUserRepository _userRepository;
-        //private readonly IEmailService _emailService;
-
-
-        public FavoriteProductsService(IUserRepository userRepository, IRepository<FavoriteProducts> favoriteProductsRepository, IRepository<ProductInFavoriteProducts> productInFavoriteProductsRepository)
+        private readonly IRepository<Product> _productRepository;
+        public FavoriteProductsService(IUserRepository userRepository, IRepository<FavoriteProducts> favoriteProductsRepository, IRepository<ProductInFavoriteProducts> productInFavoriteProductsRepository, IRepository<Product> productRepository)
         {
             _userRepository = userRepository;
             _favoriteProductsRepository = favoriteProductsRepository;
             _productInFavoriteProductsRepository = productInFavoriteProductsRepository;
-            //_emailService = emailService;
+            _productRepository = productRepository;
         }
-        public bool AddToShoppingConfirmed(ProductInFavoriteProducts model, string userId)
+        public bool AddToFavoriteProductsConfirmed(ProductInFavoriteProducts model, string userId)
         {
-
             var loggedInUser = _userRepository.Get(userId);
-
             var userFavoriteProducts = loggedInUser.FavoriteProducts;
-
             if (userFavoriteProducts.ProductInFavorite == null)
-                userFavoriteProducts.ProductInFavorite = new List<ProductInFavoriteProducts>(); ;
-
+            {
+                userFavoriteProducts.ProductInFavorite = new List<ProductInFavoriteProducts>();
+            }
             userFavoriteProducts.ProductInFavorite.Add(model);
             _favoriteProductsRepository.Update(userFavoriteProducts);
             return true;
@@ -41,12 +36,9 @@ namespace FlexForge.Service.Implementation
             if (productId != null)
             {
                 var loggedInUser = _userRepository.Get(userId);
-
                 var userFavoriteProducts = loggedInUser.FavoriteProducts;
                 var product = userFavoriteProducts.ProductInFavorite.Where(x => x.ProductId == productId).FirstOrDefault();
-
                 userFavoriteProducts.ProductInFavorite.Remove(product);
-
                 _favoriteProductsRepository.Update(userFavoriteProducts);
                 return true;
             }
@@ -54,26 +46,46 @@ namespace FlexForge.Service.Implementation
 
         }
 
-        public FavoriteProductsDto getFavoriteProductsInfo(string userId)
+        public List<Product> getFavoriteProductsInfo(string userId)
         {
-            var loggedInUser = _userRepository.Get(userId);
+            FlexForgeApplicationUser user = _userRepository.Get(userId);
 
-            var userFavoriteProducts = loggedInUser?.FavoriteProducts;
-            var allProduct = userFavoriteProducts?.ProductInFavorite?.ToList();
+            if (user == null || user.FavoriteProducts == null)
+                return new List<Product>();
 
-            FavoriteProductsDto dto = new FavoriteProductsDto
-            {
-                Products = allProduct
-            };
-            return dto;
+            var favoriteProductsId = user.FavoriteProducts.Id;
+
+            // Retrieve the list of product IDs from the favorite products
+            var productIds = _productInFavoriteProductsRepository
+                                .GetAll()
+                                .Where(x => x.FavoriteProductsId == favoriteProductsId)
+                                .Select(x => x.ProductId)
+                                .ToList();
+
+            // Retrieve products based on the list of product IDs
+            var products = _productRepository
+                                .GetAll()
+                                .Where(p => productIds.Contains(p.Id))
+                                .ToList();
+
+            return products;
         }
 
-        public bool IsFavorite(string userId, Guid productId)
+        public bool IsFavorite(string userId, Guid? productId)
         {
-            FavoriteProductsDto _favoriteProductsDto = this.getFavoriteProductsInfo(userId);
-            if (_favoriteProductsDto != null && _favoriteProductsDto.Products != null)
+            FlexForgeApplicationUser user = _userRepository.Get(userId);
+            if (user == null || user.FavoriteProducts == null || productId == null)
+                return false;
+
+            FavoriteProducts favoriteProducts = user.FavoriteProducts;
+            var productInFavorites = _productInFavoriteProductsRepository
+                                     .GetAll()
+                                     .Where(x => x.FavoriteProductsId == favoriteProducts.Id);
+
+            foreach (ProductInFavoriteProducts pfp in productInFavorites)
             {
-                return _favoriteProductsDto.Products.Any(p => p.ProductId == productId);
+                if (pfp.ProductId == productId)
+                    return true;
             }
             return false;
         }

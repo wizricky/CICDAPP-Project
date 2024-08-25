@@ -1,59 +1,28 @@
 ﻿@inject SignInManager<FlexForgeApplicationUser> SignInManager
 @inject UserManager<FlexForgeApplicationUser> UserManager
 @model FlexForge.Domain.Domain.Product
-
 @{
-    ViewData["Title"] = "Details";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = null;
 }
 
-<div class="container my-4">
-    <div class="row justify-content-center">
-        <div class="col-md-8 p-4 rounded shadow-sm" color: #fff;">
-            <div class="d-flex align-items-start mb-4">
-                <!-- Back Button -->
-                <a class="btn btn-secondary me-3" asp-action="Index">
-                    <i class="fa fa-arrow-left"></i> Back to List
-                </a>
-                <!-- Product Image -->
-                <img src="@Model.ProductImage" class="img-fluid" alt="@Model.ProductName" style="max-height: 300px; object-fit: cover;">
+@Html.Partial("~/Views/Fragments/ProductDetails.cshtml")
+
+<!-- Custom Modal for Sign-In Alert -->
+<div class="modal fade" id="signInModal" tabindex="-1" aria-labelledby="signInModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="signInModalLabel">Sign In Required</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <h4>Product Details</h4>
-            <hr />
-            <dl class="row">
-                <dt class="col-sm-4">
-                    @Html.DisplayNameFor(model => model.ProductName)
-                </dt>
-                <dd class="col-sm-8">
-                    @Html.DisplayFor(model => model.ProductName)
-                </dd>
-                <dt class="col-sm-4">
-                    @Html.DisplayNameFor(model => model.ProductDescription)
-                </dt>
-                <dd class="col-sm-8">
-                    @Html.DisplayFor(model => model.ProductDescription)
-                </dd>
-                <dt class="col-sm-4">
-                    @Html.DisplayNameFor(model => model.Price)
-                </dt>
-                <dd class="col-sm-8">
-                    @Html.DisplayFor(model => model.Price)
-                </dd>
-                <dt class="col-sm-4">
-                    @Html.DisplayNameFor(model => model.Rating)
-                </dt>
-                <dd class="col-sm-8">
-                    @Html.DisplayFor(model => model.Rating)
-                </dd>
-            </dl>
-            <div class="text-center">
-                @if (User.IsInRole("Admin"))
-                {
-                    <a class="btn btn-warning" asp-action="Edit" asp-route-id="@Model?.Id">Edit</a>
-                    <a class="btn btn-warning" asp-action="Delete" asp-route-id="@Model?.Id">Delete</a>
-                }
-                <a asp-controller="Products" asp-action="AddToCart" asp-route-id="@Model?.Id" class="btn btn-info">Add to Cart</a>
+            <div class="modal-body">
+                You need to be signed in to add products to your favorites. Please sign in to continue.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <a href="~/Identity/Account/Login" class="btn btn-primary">Sign In</a>
             </div>
         </div>
     </div>
 </div>
+

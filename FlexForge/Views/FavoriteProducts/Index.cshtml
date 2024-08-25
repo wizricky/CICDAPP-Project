@@ -1,55 +1,58 @@
-﻿@model List<FlexForge.Domain.Domain.Product>
+﻿<style>
+    .products-index .card {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
 
-@{
-    ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-<style>
-    .btn:hover .fa-heart:not(.favorite) {
-        color: red !important; /* Red on hover if not favorite */
+    .products-index .card-body {
+        flex-grow: 1;
+    }
+
+    .products-index .card-footer {
+        margin-top: auto;
     }
 </style>
-    
-<h1>Index</h1>
-
-<div class="container">
-
-    @for(int i=0;i<Model?.Count; i++)
-    {
-        var item = Model[i];
-        if(i % 3 == 0)
-        {
-            @:<div class="row">
-        }
-        <div class="col-3 m-4">
-
-            <div class="card" style="width: 18rem; height: 35rem">
-                <img class="card-img-top" src="@item.ProductImage" alt="Card image cap">
-                <div class="card-body">
-                    <h5 class="card-title">@item.ProductName</h5>
-                    <p class="card-text">@item.ProductDescription</p>
-                    <h6>Price: @item.Price</h6>
-                     <form id="favoriteForm-@item.Id" asp-action="AddToProductsConfirmed">
-                        <input type="hidden" name="id" value="@item.Id" />
-                        <button type="button" class="btn p-0" onclick="toggleFavorite(this, '@item.Id')" aria-label="Add to favorites">
-                            <i class="fa fa-heart" style="font-size: 1.25rem;"></i>
-                        </button>
-                    </form>
+<div style="background-image: url('@Url.Content("~/images/productsindex.jpg")'); background-size: cover; background-position: center; padding: 2rem;">
+    <div class="container">
+        <div class="row">
+                <div class="products-index">
+                    <div class="row">
+                        @for (int i = 0; i < Model.Count; i++)
+                        {
+                            var item = Model[i];
+                            <div class="col-md-4 col-lg-3 mb-5">
+                                <div class="card border-light shadow-sm bg-light-opacity">
+                                    <a asp-controller="FavoriteProducts" asp-action="Details" asp-route-id="@item.Id" class="text-decoration-none">
+                                        <img class="card-img-top img-fluid" src="@item.ProductImage" alt="Card image cap" style="height: 200px; object-fit: cover;">
+                                        <div class="card-body text-center">
+                                            <h5 class="card-title">@item.ProductName</h5>
+                                            <p class="card-text">@item.ProductDescription</p>
+                                            <h6>Price: @item.Price</h6>
+                                        </div>
+                                    </a>
+                                    <div class="card-footer bg-light text-center">
+                                        <a asp-controller="Products" asp-action="AddToCart" asp-route-id="@item.Id" class="btn btn-info">Add to Cart</a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
                 </div>
-                <div class="card-footer">
-                    <a asp-controller="Products" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-info">Edit</a>
-                    <a asp-controller="Products" asp-action="AddToCart" asp-route-id="@item.Id" class="btn btn-info">Add to Cart</a>
-                </div>
-
             </div>
         </div>
-
-        if(i % 3 == 2)
-        {
-            @:</div>
-        }
-    }
+    </div>
 </div>
 
-
-
+@section Scripts {
+    <script>
+        function toggleSubCategories(categoryId) {
+            var subCategories = document.getElementById('subCategories-' + categoryId);
+            if (subCategories.style.display === 'none') {
+                subCategories.style.display = 'block';
+            } else {
+                subCategories.style.display = 'none';
+            }
+        }
+    </script>
+}
