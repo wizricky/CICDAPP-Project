@@ -1,24 +1,26 @@
 ﻿@using FlexForge.Domain
 ﻿@using Microsoft.Extensions.Options
 @model FlexForge.Domain.DTO.ShoppingCartDto
-
+@inject IOptions<StripeSettings> Stripe
 @{
     ViewData["Title"] = "Shopping Cart";
 }
+<script src="https://js.stripe.com/v3/"></script>
 
 @if (Model.TotalPrice != 0)
 {
-    <form asp-controller="ShoppingCarts" asp-action="PayOrder" method="post">
-        <article>
-            <script src="https://checkout.stripe.com/checkout.js"
-                    class="stripe-button"
-                    data-locale="auto"
-                    data-description="Flex Forge Payment"
-                    data-amount="@(Model.TotalPrice * 100)"
-                    data-label="Pay $@Model.TotalPrice">
-            </script>
-        </article>
-    </form>
+        <form asp-controller="ShoppingCarts" asp-action="PayOrder" method="post">
+            <article>
+                <script src="https://checkout.stripe.com/checkout.js"
+                        class="stripe-button"
+                        data-key="@Stripe.Value.PublishableKey"
+                        data-locale="auto"
+                        data-description="EShop Application Payment"
+                        data-amount="@(Model.TotalPrice * 100)"
+                        data-label="Pay $@Model.TotalPrice">
+                </script>
+            </article>
+        </form>
 }
 <table class="table table-hover table-light">
     <thead class="thead-light">
@@ -35,18 +37,18 @@
         @for (int i = 0; i < Model.Products.Count(); i++)
         {
             var item = Model.Products[i];
-            <tr style="border:hidden">
-                <td>@(i + 1)</td>
-                <td>
-                    <img src="@item.Product.ProductImage" alt="@item.Product.ProductName" class="img-fluid" style="max-width: 100px; height: auto;" />
-                </td>
-                <td>@Html.DisplayFor(modelItem => item.Product.ProductName)</td>
-                <td>@Html.DisplayFor(modelItem => item.Product.Price)</td>
-                <td>@Html.DisplayFor(modelItem => item.Quantity)</td>
-                <td>
-                    <a asp-action="DeleteFromShoppingCart" asp-controller="ShoppingCarts" asp-route-id="@item.Product.Id" class="btn btn-danger btn-sm"><i class="fa fa-times"></i></a>
-                </td>
-            </tr>
+                <tr style="border:hidden">
+                    <td>@(i + 1)</td>
+                    <td>
+                        <img src="@item.Product.ProductImage" alt="@item.Product.ProductName" class="img-fluid" style="max-width: 100px; height: auto;" />
+                    </td>
+                    <td>@Html.DisplayFor(modelItem => item.Product.ProductName)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Product.Price)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Quantity)</td>
+                    <td>
+                        <a asp-action="DeleteFromShoppingCart" asp-controller="ShoppingCarts" asp-route-id="@item.Product.Id" class="btn btn-danger btn-sm"><i class="fa fa-times"></i></a>
+                    </td>
+                </tr>
         }
     </tbody>
     <tfoot>

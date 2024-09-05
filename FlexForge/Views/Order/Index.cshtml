@@ -1,0 +1,40 @@
+﻿@model IEnumerable<FlexForge.Domain.Domain.Order>
+
+@{
+    ViewData["Title"] = "User Orders";
+}
+
+<h2>Your Orders</h2>
+
+@if (!Model.Any())
+{
+    <p>You have no orders.</p>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Order Date</th>
+                <th>Products</th>
+                <th>Total Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var order in Model)
+            {
+                var totalPrice = order.ProductsInOrder.Sum(p => p.Price * p.Quantity);
+
+                <tr>
+                    <td>@order.orderDate.ToString("MMMM dd, yyyy")</td>
+                    <td>
+                        <a asp-controller="Order" asp-action="OrderProducts" asp-route-orderId="@order.Id" class="btn btn-info">
+                            View Products
+                        </a>
+                    </td>
+                    <td>@totalPrice.ToString("C")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

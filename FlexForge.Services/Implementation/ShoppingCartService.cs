@@ -1,18 +1,10 @@
 ﻿using FlexForge.Domain.Domain;
 using FlexForge.Domain.DTO;
-using FlexForge.Repository.Implementation;
 using FlexForge.Repository.Interface;
 using FlexForge.Service.Interface;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Mail;
-using System.Reflection.Metadata.Ecma335;
-using System.Security.Claims;
+using System.Diagnostics;
 using System.Text;
-using System.Threading.Tasks;
+
 
 namespace FlexForge.Service.Implementation
 {
@@ -100,7 +92,8 @@ namespace FlexForge.Service.Implementation
                 {
                     Id = Guid.NewGuid(),
                     userId = userId,
-                    Owner = loggedInUser
+                    Owner = loggedInUser,
+                    orderDate = DateTime.Now,
                 };
 
                 _orderRepository.Insert(order);
@@ -115,7 +108,8 @@ namespace FlexForge.Service.Implementation
                         Product = x.Product,
                         OrderId = order.Id,
                         Order = order,
-                        Quantity = x.Quantity
+                        Quantity = x.Quantity,
+                        Price = x.Product.Price
                     }
                     ).ToList();
 

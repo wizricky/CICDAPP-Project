@@ -4,10 +4,7 @@ using FlexForge.Repository.Implementation;
 using FlexForge.Repository.Interface;
 using FlexForge.Service.Interface;
 using FlexForge.Service.Implementation;
-
-
-//using FlexForge.Service.Implementation;
-//using FlexForge.Service.Interface;
+using FlexForge.Domain;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using NuGet.Protocol.Core.Types;
@@ -19,7 +16,8 @@ using FlexForge.Services.Implementation;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("Stripe"));
+builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("EmailSettings"));
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -34,12 +32,12 @@ builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped(typeof(IUserRepository), typeof(UserRepository));
 builder.Services.AddScoped(typeof(IOrderRepository), typeof(OrderRepository));
 
-builder.Services.AddTransient<IOrderService, OrderService>();
-
 builder.Services.AddTransient<IProductService, ProductService>();
 builder.Services.AddTransient<IShoppingCartService, ShoppingCartService>();
 builder.Services.AddTransient<IFavoriteProductsService, FavoriteProductsService>();
 builder.Services.AddTransient<ICategoriesService, CategoriesService>();
+builder.Services.AddTransient<IOrderService, OrderService>();
+
 
 builder.Services.AddControllersWithViews().AddNewtonsoftJson(options =>
     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);

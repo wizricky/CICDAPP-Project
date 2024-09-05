@@ -13,5 +13,6 @@ namespace FlexForge.Domain.Domain
         public Guid OrderId { get; set; }
         public Order Order { get; set; }
         public int Quantity { get; set; }
+        public int Price { get; set; }
     }
 }

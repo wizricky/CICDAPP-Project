@@ -1,0 +1,31 @@
+﻿@model FlexForge.Domain.Domain.Order
+@using System.Security.Claims
+@{
+    ViewData["Title"] = "Order Products";
+}
+
+<h2>Products in Order</h2>
+
+<p>Order Date: @Model.orderDate.ToString("MMMM dd, yyyy")</p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Product Name</th>
+            <th>Quantity</th>
+            <th>Price</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var product in Model.ProductsInOrder)
+        {
+            <tr>
+                <td>@product.Product.ProductName</td>
+                <td>@product.Quantity</td>
+                <td>@product.Price.ToString("C")</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-controller="Order" asp-action="Index" asp-route-userId="@User.FindFirstValue(ClaimTypes.NameIdentifier)">Back To All Orders</a>

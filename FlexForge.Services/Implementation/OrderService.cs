@@ -1,11 +1,6 @@
 ﻿using FlexForge.Domain.Domain;
 using FlexForge.Repository.Interface;
 using FlexForge.Service.Interface;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FlexForge.Service.Implementation
 {
@@ -24,6 +19,12 @@ namespace FlexForge.Service.Implementation
         public Order GetDetailsForOrder(BaseEntity id)
         {
             return _orderRepository.GetDetailsForOrder(id);
+        }
+        public List<Order> GetOrdersByUserId(string userId)
+        {
+            return _orderRepository.GetAllOrders()
+                                    .Where(order => order.userId == userId) 
+                                    .ToList();
         }
     }
 }

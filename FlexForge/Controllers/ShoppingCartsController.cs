@@ -64,7 +64,7 @@ namespace FlexForge.Web.Controllers
 
         public IActionResult PayOrder(string stripeEmail, string stripeToken)
         {
-            StripeConfiguration.ApiKey = "sk_test_51Io84IHBiOcGzrvu4sxX66rTHq8r5nxIxRiJPbOHB4NwVJOE1jSlxgYe741ITs024uXhtpBFtxm3RoCZc3kafocC00IhvgxkL0";
+            StripeConfiguration.ApiKey = "sk_test_51PvdTh06fkc3G34d7t89gHPUzHQxTjyei1HGOlzYbGzgzggPXIlnK85tuXkjTzeWAM7SP0XennJO3cuWEm2FniWz00ifnGZDh2";
             var customerService = new CustomerService();
             var chargeService = new ChargeService();
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
