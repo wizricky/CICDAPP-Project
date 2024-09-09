@@ -11,6 +11,8 @@ using NuGet.Protocol.Core.Types;
 using FlexForge.Domain.Domain;
 using FlexForge.Services.Interface;
 using FlexForge.Services.Implementation;
+using QuestPDF.Infrastructure;
+using Size = FlexForge.Domain.Domain.Size;
 
 
 
@@ -41,7 +43,7 @@ builder.Services.AddTransient<IOrderService, OrderService>();
 
 builder.Services.AddControllersWithViews().AddNewtonsoftJson(options =>
     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
-
+QuestPDF.Settings.License = LicenseType.Community;
 builder.Services.AddControllers();
 //builder.Services.AddEndpointsApiExplorer();
 //builder.Services.AddSwaggerGen();

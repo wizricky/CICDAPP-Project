@@ -9,6 +9,7 @@
 
 @if (Model.TotalPrice != 0)
 {
+    
         <form asp-controller="ShoppingCarts" asp-action="PayOrder" method="post">
             <article>
                 <script src="https://checkout.stripe.com/checkout.js"
@@ -21,7 +22,9 @@
                 </script>
             </article>
         </form>
+  
 }
+
 <table class="table table-hover table-light">
     <thead class="thead-light">
         <tr>

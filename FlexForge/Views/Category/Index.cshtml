@@ -10,6 +10,7 @@
                 <div class="col-md-4 col-lg-3 mb-5">                    
                             <div  text-center">
                                 <h5 class="card-title">@item.CategoryName</h5>
+                        <img class="card-img-top img-fluid" src="@item.CategoryImage" alt="Card image cap" style="height: 200px; object-fit: cover;">
                             </div>
                         <div class="card-footer bg-light text-center">                          
                              <a asp-controller="Category" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning text-dark rounded shadow-sm">Edit</a>

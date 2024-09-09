@@ -1,5 +1,7 @@
-﻿using FlexForge.Service.Interface;
+﻿using FlexForge.Service.Implementation;
+using FlexForge.Service.Interface;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace FlexForge.Web.Controllers
 {
@@ -27,6 +29,12 @@ namespace FlexForge.Web.Controllers
             }
 
             return View(order);
+        }
+        public IActionResult ExportOrdersToPDf()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var pdfData = _orderService.ExportOrderPdf(userId);
+            return File(pdfData, "application/pdf", "OrderSummary.pdf");
         }
     }
 }

@@ -5,7 +5,11 @@
 }
 
 <h2>Your Orders</h2>
-
+<div>
+<a asp-controller="Order" asp-action="ExportOrdersToPDf" class="btn btn-info">
+    <i class="bi bi-file-earmark-pdf me-2"></i>Export Orders
+</a>
+</div>
 @if (!Model.Any())
 {
     <p>You have no orders.</p>
@@ -32,6 +36,7 @@ else
                             View Products
                         </a>
                     </td>
+                    
                     <td>@totalPrice.ToString("C")</td>
                 </tr>
             }

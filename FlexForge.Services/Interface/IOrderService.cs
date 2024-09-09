@@ -7,5 +7,6 @@ namespace FlexForge.Service.Interface
         List<Order> GetAllOrders();
         Order GetDetailsForOrder(BaseEntity id);
         List<Order> GetOrdersByUserId(string userId);
+        byte[] ExportOrderPdf(string userId);
     }
 }
