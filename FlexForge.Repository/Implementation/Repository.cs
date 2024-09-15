@@ -7,6 +7,7 @@ namespace FlexForge.Repository.Implementation
     public class Repository<T> : IRepository<T> where T : BaseEntity
     {
         private readonly ApplicationDbContext context;
+        //private readonly CafeBarDBContext cafeBarDBContext;
         private DbSet<T> entities;
         string errorMessage = string.Empty;
 
@@ -14,6 +15,7 @@ namespace FlexForge.Repository.Implementation
         {
             this.context = context;
             entities = context.Set<T>();
+
         }
         public IEnumerable<T> GetAll()
         {

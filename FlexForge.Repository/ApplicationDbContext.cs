@@ -20,7 +20,6 @@ namespace FlexForge.Repository
         public virtual DbSet<ProductInFavoriteProducts> ProductInFavoriteProducts { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<ProductInOrder> ProductInOrders { get; set; }
-       // public virtual DbSet<EmailMessage> EmailMessages { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {

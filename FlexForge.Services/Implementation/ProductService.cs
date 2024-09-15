@@ -1,5 +1,7 @@
 ﻿using FlexForge.Domain.Domain;
 using FlexForge.Domain.Enum;
+using FlexForge.Repository;
+using FlexForge.Repository.Implementation;
 using FlexForge.Repository.Interface;
 using FlexForge.Service.Interface;
 using OfficeOpenXml;
@@ -13,12 +15,18 @@ namespace FlexForge.Service.Implementation
         private readonly IRepository<ProductInShoppingCart> _productInShoppingCartRepository;
         private readonly IUserRepository _userRepository;
         private readonly IRepository<Category> _categoryRepository;
-        public ProductService(IRepository<Product> productRepository, IRepository<ProductInShoppingCart> productInShoppingCartRepository, IUserRepository userRepository, IRepository<Category> categoryRepository)
+        private readonly ICafeBarProductRepository<CafeBarProduct> _cafeBarProductRepository;
+        public ProductService(IRepository<Product> productRepository, IRepository<ProductInShoppingCart> productInShoppingCartRepository, IUserRepository userRepository, IRepository<Category> categoryRepository, ICafeBarProductRepository<CafeBarProduct> cafeBarProductRepository)
         {
             _productRepository = productRepository;
             _productInShoppingCartRepository = productInShoppingCartRepository;
             _userRepository = userRepository;
             _categoryRepository = categoryRepository;
+            _cafeBarProductRepository = cafeBarProductRepository;
+        }
+        public List<CafeBarProduct> GetAllCafeBarProducts()
+        {
+            return _cafeBarProductRepository.GetAll().ToList();
         }
 
         public void CreateNewProduct(Product p)

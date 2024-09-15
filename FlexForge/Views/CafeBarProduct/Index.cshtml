@@ -1,0 +1,25 @@
+﻿@model List<FlexForge.Domain.Domain.CafeBarProduct>
+
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Cafe Bar Products</h2>
+    <div class="row">
+        @foreach (var product in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">@product.Name</h5>
+                        <p class="card-text">
+                            <strong>Category:</strong> @product.Category <br />
+                            <strong>Price:</strong> $@product.Price <br />
+                            <strong>Quantity:</strong> @product.Quantity <br />
+                        </p>
+                    </div>
+                </div>
+            </div>
+        }
+        <div>
+            <a href="https://cbms.azurewebsites.net/" class="text-primary">Link to Cafe Bar Management System</a>
+        </div>
+    </div>
+</div>
