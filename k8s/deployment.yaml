@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flexforgeapp
+  namespace: flexforge_ns
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: flexforgeapp
+  template:
+    metadata:
+      labels:
+        app: flexforgeapp
+    spec:
+      containers:
+        - name: flexforgeapp
+          image: ristekimov/cicdapp-project:latest  # Updated to Docker Hub
+          ports:
+            - containerPort: 8080
+          env:
+            - name: ConnectionStrings__DefaultConnection
+              valueFrom:
+                secretKeyRef:
+                  name: my-db-secret
+                  key: connectionString
