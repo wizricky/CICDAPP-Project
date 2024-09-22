@@ -17,6 +17,5 @@ namespace FlexForge.Service.Interface
         void UpdateExistingProduct(Product p);
         void DeleteProduct(Guid id);
         void ImportProductsFromExcel(Stream fileStream);
-        List<CafeBarProduct> GetAllCafeBarProducts();
     }
 }

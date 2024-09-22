@@ -22,11 +22,9 @@ builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("Str
 builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("EmailSettings"));
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-var connectionStringCafeBar = builder.Configuration.GetConnectionString("CafeBarConnection") ?? throw new InvalidOperationException("Connection string 'CafeBarConnection' not found.");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
-builder.Services.AddDbContext<CafeBarDBContext>(options =>
-    options.UseSqlServer(connectionStringCafeBar));
+
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<FlexForgeApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
@@ -36,7 +34,7 @@ builder.Services.AddDefaultIdentity<FlexForgeApplicationUser>(options => options
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped(typeof(IUserRepository), typeof(UserRepository));
 builder.Services.AddScoped(typeof(IOrderRepository), typeof(OrderRepository));
-builder.Services.AddScoped(typeof(ICafeBarProductRepository<>), typeof(CafeBarProductRepository<>));
+
 
 
 builder.Services.AddTransient<IProductService, ProductService>();

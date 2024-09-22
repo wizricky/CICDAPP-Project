@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\rkimov\\Desktop\\flexforge\\FlexForge\\FlexForge.Web.csproj": {}
+    "C:\\Users\\rkimov\\Desktop\\cicdapp-project\\CICDAPP-Project\\FlexForge\\FlexForge.Web.csproj": {}
   },
   "projects": {
-    "C:\\Users\\rkimov\\Desktop\\flexforge\\FlexForge.Domain\\FlexForge.Domain.csproj": {
+    "C:\\Users\\rkimov\\Desktop\\cicdapp-project\\CICDAPP-Project\\FlexForge.Domain\\FlexForge.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\rkimov\\Desktop\\flexforge\\FlexForge.Domain\\FlexForge.Domain.csproj",
+        "projectUniqueName": "C:\\Users\\rkimov\\Desktop\\cicdapp-project\\CICDAPP-Project\\FlexForge.Domain\\FlexForge.Domain.csproj",
         "projectName": "FlexForge.Domain",
-        "projectPath": "C:\\Users\\rkimov\\Desktop\\flexforge\\FlexForge.Domain\\FlexForge.Domain.csproj",
+        "projectPath": "C:\\Users\\rkimov\\Desktop\\cicdapp-project\\CICDAPP-Project\\FlexForge.Domain\\FlexForge.Domain.csproj",
         "packagesPath": "C:\\Users\\rkimov\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\rkimov\\Desktop\\flexforge\\FlexForge.Domain\\obj\\",
+        "outputPath": "C:\\Users\\rkimov\\Desktop\\cicdapp-project\\CICDAPP-Project\\FlexForge.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\rkimov\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -66,18 +66,18 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.202/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\rkimov\\Desktop\\flexforge\\FlexForge.Repository\\FlexForge.Repository.csproj": {
+    "C:\\Users\\rkimov\\Desktop\\cicdapp-project\\CICDAPP-Project\\FlexForge.Repository\\FlexForge.Repository.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\rkimov\\Desktop\\flexforge\\FlexForge.Repository\\FlexForge.Repository.csproj",
+        "projectUniqueName": "C:\\Users\\rkimov\\Desktop\\cicdapp-project\\CICDAPP-Project\\FlexForge.Repository\\FlexForge.Repository.csproj",
         "projectName": "FlexForge.Repository",
-        "projectPath": "C:\\Users\\rkimov\\Desktop\\flexforge\\FlexForge.Repository\\FlexForge.Repository.csproj",
+        "projectPath": "C:\\Users\\rkimov\\Desktop\\cicdapp-project\\CICDAPP-Project\\FlexForge.Repository\\FlexForge.Repository.csproj",
         "packagesPath": "C:\\Users\\rkimov\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\rkimov\\Desktop\\flexforge\\FlexForge.Repository\\obj\\",
+        "outputPath": "C:\\Users\\rkimov\\Desktop\\cicdapp-project\\CICDAPP-Project\\FlexForge.Repository\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\rkimov\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -94,8 +94,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\rkimov\\Desktop\\flexforge\\FlexForge.Domain\\FlexForge.Domain.csproj": {
-                "projectPath": "C:\\Users\\rkimov\\Desktop\\flexforge\\FlexForge.Domain\\FlexForge.Domain.csproj"
+              "C:\\Users\\rkimov\\Desktop\\cicdapp-project\\CICDAPP-Project\\FlexForge.Domain\\FlexForge.Domain.csproj": {
+                "projectPath": "C:\\Users\\rkimov\\Desktop\\cicdapp-project\\CICDAPP-Project\\FlexForge.Domain\\FlexForge.Domain.csproj"
               }
             }
           }
@@ -115,6 +115,10 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "EPPlus": {
+              "target": "Package",
+              "version": "[7.3.0, )"
+            },
             "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
               "target": "Package",
               "version": "[8.0.7, )"
@@ -140,18 +144,18 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.202/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\rkimov\\Desktop\\flexforge\\FlexForge.Services\\FlexForge.Services.csproj": {
+    "C:\\Users\\rkimov\\Desktop\\cicdapp-project\\CICDAPP-Project\\FlexForge.Services\\FlexForge.Services.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\rkimov\\Desktop\\flexforge\\FlexForge.Services\\FlexForge.Services.csproj",
+        "projectUniqueName": "C:\\Users\\rkimov\\Desktop\\cicdapp-project\\CICDAPP-Project\\FlexForge.Services\\FlexForge.Services.csproj",
         "projectName": "FlexForge.Services",
-        "projectPath": "C:\\Users\\rkimov\\Desktop\\flexforge\\FlexForge.Services\\FlexForge.Services.csproj",
+        "projectPath": "C:\\Users\\rkimov\\Desktop\\cicdapp-project\\CICDAPP-Project\\FlexForge.Services\\FlexForge.Services.csproj",
         "packagesPath": "C:\\Users\\rkimov\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\rkimov\\Desktop\\flexforge\\FlexForge.Services\\obj\\",
+        "outputPath": "C:\\Users\\rkimov\\Desktop\\cicdapp-project\\CICDAPP-Project\\FlexForge.Services\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\rkimov\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -168,11 +172,11 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\rkimov\\Desktop\\flexforge\\FlexForge.Domain\\FlexForge.Domain.csproj": {
-                "projectPath": "C:\\Users\\rkimov\\Desktop\\flexforge\\FlexForge.Domain\\FlexForge.Domain.csproj"
+              "C:\\Users\\rkimov\\Desktop\\cicdapp-project\\CICDAPP-Project\\FlexForge.Domain\\FlexForge.Domain.csproj": {
+                "projectPath": "C:\\Users\\rkimov\\Desktop\\cicdapp-project\\CICDAPP-Project\\FlexForge.Domain\\FlexForge.Domain.csproj"
               },
-              "C:\\Users\\rkimov\\Desktop\\flexforge\\FlexForge.Repository\\FlexForge.Repository.csproj": {
-                "projectPath": "C:\\Users\\rkimov\\Desktop\\flexforge\\FlexForge.Repository\\FlexForge.Repository.csproj"
+              "C:\\Users\\rkimov\\Desktop\\cicdapp-project\\CICDAPP-Project\\FlexForge.Repository\\FlexForge.Repository.csproj": {
+                "projectPath": "C:\\Users\\rkimov\\Desktop\\cicdapp-project\\CICDAPP-Project\\FlexForge.Repository\\FlexForge.Repository.csproj"
               }
             }
           }
@@ -191,6 +195,12 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
+          "dependencies": {
+            "QuestPDF": {
+              "target": "Package",
+              "version": "[2024.7.3, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -207,18 +217,18 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.202/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\rkimov\\Desktop\\flexforge\\FlexForge\\FlexForge.Web.csproj": {
+    "C:\\Users\\rkimov\\Desktop\\cicdapp-project\\CICDAPP-Project\\FlexForge\\FlexForge.Web.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\rkimov\\Desktop\\flexforge\\FlexForge\\FlexForge.Web.csproj",
+        "projectUniqueName": "C:\\Users\\rkimov\\Desktop\\cicdapp-project\\CICDAPP-Project\\FlexForge\\FlexForge.Web.csproj",
         "projectName": "FlexForge.Web",
-        "projectPath": "C:\\Users\\rkimov\\Desktop\\flexforge\\FlexForge\\FlexForge.Web.csproj",
+        "projectPath": "C:\\Users\\rkimov\\Desktop\\cicdapp-project\\CICDAPP-Project\\FlexForge\\FlexForge.Web.csproj",
         "packagesPath": "C:\\Users\\rkimov\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\rkimov\\Desktop\\flexforge\\FlexForge\\obj\\",
+        "outputPath": "C:\\Users\\rkimov\\Desktop\\cicdapp-project\\CICDAPP-Project\\FlexForge\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\rkimov\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -235,14 +245,14 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\rkimov\\Desktop\\flexforge\\FlexForge.Domain\\FlexForge.Domain.csproj": {
-                "projectPath": "C:\\Users\\rkimov\\Desktop\\flexforge\\FlexForge.Domain\\FlexForge.Domain.csproj"
+              "C:\\Users\\rkimov\\Desktop\\cicdapp-project\\CICDAPP-Project\\FlexForge.Domain\\FlexForge.Domain.csproj": {
+                "projectPath": "C:\\Users\\rkimov\\Desktop\\cicdapp-project\\CICDAPP-Project\\FlexForge.Domain\\FlexForge.Domain.csproj"
               },
-              "C:\\Users\\rkimov\\Desktop\\flexforge\\FlexForge.Repository\\FlexForge.Repository.csproj": {
-                "projectPath": "C:\\Users\\rkimov\\Desktop\\flexforge\\FlexForge.Repository\\FlexForge.Repository.csproj"
+              "C:\\Users\\rkimov\\Desktop\\cicdapp-project\\CICDAPP-Project\\FlexForge.Repository\\FlexForge.Repository.csproj": {
+                "projectPath": "C:\\Users\\rkimov\\Desktop\\cicdapp-project\\CICDAPP-Project\\FlexForge.Repository\\FlexForge.Repository.csproj"
               },
-              "C:\\Users\\rkimov\\Desktop\\flexforge\\FlexForge.Services\\FlexForge.Services.csproj": {
-                "projectPath": "C:\\Users\\rkimov\\Desktop\\flexforge\\FlexForge.Services\\FlexForge.Services.csproj"
+              "C:\\Users\\rkimov\\Desktop\\cicdapp-project\\CICDAPP-Project\\FlexForge.Services\\FlexForge.Services.csproj": {
+                "projectPath": "C:\\Users\\rkimov\\Desktop\\cicdapp-project\\CICDAPP-Project\\FlexForge.Services\\FlexForge.Services.csproj"
               }
             }
           }
@@ -265,6 +275,14 @@
             "Abp.Web.Common": {
               "target": "Package",
               "version": "[9.3.0, )"
+            },
+            "EPPlus": {
+              "target": "Package",
+              "version": "[7.3.0, )"
+            },
+            "ExcelDataReader": {
+              "target": "Package",
+              "version": "[3.7.0, )"
             },
             "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": {
               "target": "Package",
@@ -298,15 +316,19 @@
             },
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
-              "version": "[8.0.3, )"
+              "version": "[8.0.4, )"
             },
             "Stripe.net": {
               "target": "Package",
-              "version": "[45.5.0, )"
+              "version": "[44.4.0, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.4.0, )"
+            },
+            "popper.js": {
+              "target": "Package",
+              "version": "[1.16.1, )"
             }
           },
           "imports": [
@@ -328,7 +350,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.202/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
