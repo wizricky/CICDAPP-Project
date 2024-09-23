@@ -27,7 +27,9 @@ jobs:
         with:
           context: .
           push: true
-          tags: ristekimov/cicdapp-project:latest
+          tags: |
+            ristekimov/cicdapp-project:latest
+            ristekimov/cicdapp-project:${{ github.sha }}  # Use the commit SHA as a unique tag
 
   deploy:
     runs-on: ubuntu-latest
