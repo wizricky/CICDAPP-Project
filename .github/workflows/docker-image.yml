@@ -28,3 +28,22 @@ jobs:
           context: .
           push: true
           tags: ristekimov/cicdapp-project:latest
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build  
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Kubeconfig
+        run: |
+          echo "${{ secrets.KUBE_CONFIG }}" > $HOME/.kube/config
+          chmod 600 $HOME/.kube/config
+
+      - name: Deploy to Kubernetes
+        run: |
+          kubectl apply -f ./k8s/  
+          kubectl set image deployment/flexforgeapp my-container=ristekimov/cicdapp-project:latest --namespace=flexforge-ns
+          kubectl rollout status deployment/flexforgeapp --namespace=flexforge-ns

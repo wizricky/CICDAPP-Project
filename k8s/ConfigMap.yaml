@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: app-config
-  namespace: flexforge_ns
+  namespace: flexforge-ns
 data:
   DB_HOST: "flexfdbserver.database.windows.net"
   DB_PORT: "1443"

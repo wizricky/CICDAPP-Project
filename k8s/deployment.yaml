@@ -2,9 +2,9 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: flexforgeapp
-  namespace: flexforge_ns
+  namespace: flexforge-ns
 spec:
-  replicas: 2
+  replicas: 3
   selector:
     matchLabels:
       app: flexforgeapp
@@ -16,6 +16,7 @@ spec:
       containers:
         - name: flexforgeapp
           image: ristekimov/cicdapp-project:latest  # Updated to Docker Hub
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080
           env:

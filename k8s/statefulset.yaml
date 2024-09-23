@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: my-statefulset
+  namespace: flexforge-ns
+spec:
+  serviceName: flexforgeapp-service
+  replicas: 3
+  selector:
+    matchLabels:
+      app: flexforgeapp
+  template:
+    metadata:
+      labels:
+        app: flexforgeapp
+    spec:
+      containers:
+      - name: my-container
+        image: ristekimov/cicdapp-project:latest
+        ports:
+        - containerPort: 8080
+        env:
+        - name: DB_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: DB_HOST
+        - name: DB_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: app-config
+              key: DB_PORT

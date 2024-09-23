@@ -2,16 +2,16 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: flexforge-app-ingress
-  namespace: flexforge_ns
+  namespace: flexforge-ns
 spec:
   rules:
-    - host: flexforge.github.com
+    - host: 99be-37-25-86-63.ngrok-free.app
       http:
         paths:
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: flexforge-app-service
+                name: flexforgeapp-service
                 port:
                   number: 80
